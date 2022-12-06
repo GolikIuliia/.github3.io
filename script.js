@@ -39,16 +39,17 @@ document.getElementById('btnOver').addEventListener('click', function () {
             answerNumber  = Math.floor((minValue + maxValue) / 2);
             orderNumber++;
             orderNumberField.innerText = orderNumber;
-            const phraseRandom = Math.round(Math.random()*3);
-                if (phraseRandom === 1) {
-                    return `Вы загадали число ${answerNumber}?`;
-                } 
-                else if (phraseRandom === 2) {
-                    return `Наверное, это число ${answerNumber}?`;
-                }
-                else if (phraseRandom === 3) {
-                    return `Да это легко! Ты загадал ${answerNumber}?`;
-                }
+            answerField.innerText = `Вы загадали число ${answerNumber }?`;  
+            //const phraseRandom = Math.round(Math.random()*3);
+                // if (phraseRandom === 1) {
+                //     return `Вы загадали число ${answerNumber}?`;
+                // } 
+                // else if (phraseRandom === 2) {
+                //     return `Наверное, это число ${answerNumber}?`;
+                // }
+                // else if (phraseRandom === 3) {
+                //     return `Да это легко! Ты загадал ${answerNumber}?`;
+                // }
         }                           
         }
     }
