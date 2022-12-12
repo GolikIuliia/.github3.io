@@ -23,8 +23,8 @@ orderNumberField.innerText = orderNumber;
 text();
 
 document.getElementById('btnRetry').addEventListener('click', function () {
-    minValue = 0;
-    maxValue = 100;
+    minValue = -999;
+    maxValue = 999;
     orderNumber = 0;
 })
 
@@ -41,10 +41,10 @@ document.getElementById('btnOver').addEventListener('click', function () {
         } else {
             
             minValue = answerNumber  + 1;
-            answerNumber  = Math.floor((minValue + maxValue) / 2);
+            answerNumber = Math.floor((minValue + maxValue) / 2);
             orderNumber++;
             orderNumberField.innerText = orderNumber;          
-            answerField.innerText = `Вы загадали число ${answerNumber }?`;
+            text();
 
         }
     }
@@ -61,11 +61,11 @@ document.getElementById('btnLess').addEventListener('click', function () {
             answerField.innerText = answerPhrase;
             gameRun = false;
         } else {
-            minValue = answerNumber  - 1;
-            answerNumber  = Math.floor((minValue + maxValue) / 2);
+            maxValue = answerNumber  - 1;
+            answerNumber = Math.floor((minValue + maxValue) / 2);
             orderNumber++;
             orderNumberField.innerText = orderNumber;
-            answerField.innerText = `Вы загадали число ${answerNumber }?`;
+            text();
         }
     }
 })
@@ -73,22 +73,36 @@ function text () {
     let text;
     const phraseRandom = Math.round(Math.random()*2);
     if (phraseRandom === 0) {
-        text = `Вы загадали число ${answerNumber}?`;
+        text = `Вы загадали число ${numWord(answerNumber)}?`;
     } 
     else if (phraseRandom === 1) {
-        text = `Наверное, это число ${answerNumber}?`;
+        text = `Наверное, это число ${numWord(answerNumber)}?`;
     }
     else if (phraseRandom === 2) {
-        text = `Да это легко! Ты загадал ${answerNumber}?`;
+        text = `Возможно Вы загадали ${numWord(answerNumber)}?`;
     }
     answerField.innerText = text;
-    console.log(phraseRandom);
-}
+        }
 
+function text1 () {
+    let text1;
+    const phraseRandom = Math.round(Math.random()*2);
+    if (phraseRandom === 0) {
+        text1 = `Да ты счастливчик ${numWord(answerNumber)}?`;
+    } 
+    else if (phraseRandom === 1) {
+        text1 = `Угадал! Это число ${numWord(answerNumber)}?`;
+    }
+    else if (phraseRandom === 2) {
+        text1 = `Да это же легко! Ты загадал ${numWord(answerNumber)}?`;
+    }
+    answerField.innerText = text1;
+}
+    
 document.getElementById('btnRetry').addEventListener('click', function () {
 
-            minValue = 0;
-            maxValue = 100;
+            minValue = -999;
+            maxValue = 999;
             operation = null;   
             answerNumber  = Math.floor((minValue + maxValue) / 2);
             let orderNumber = 1;
@@ -108,11 +122,11 @@ document.getElementById('btnRetry').addEventListener('click', function () {
                         answerField.innerText = answerPhrase;
                         gameRun = false;
                     } else {
-                        minValue = answerNumber  + 1;
-                        answerNumber  = Math.floor((minValue + maxValue) / 2);
+                        minValue = answerNumber + 1;
+                        answerNumber = Math.floor((minValue + maxValue) / 2);
                         orderNumber++;
-                        orderNumberField.innerText = orderNumber;
-                        answerField.innerText = `Вы загадали число ${answerNumber }?`;
+                        orderNumberField.innerText = orderNumber;  
+                        text();
                     }
                     
                 }
@@ -129,15 +143,15 @@ document.getElementById('btnRetry').addEventListener('click', function () {
                         answerField.innerText = answerPhrase;
                         gameRun = false;
                     } else {
-                        maxValue = answerNumber  - 1;
-                        answerNumber  = Math.floor((maxValue + minValue) / 2);
+                        maxValue = answerNumber - 1;
+                        answerNumber = Math.floor((maxValue + minValue) / 2);
                         orderNumber++;
                         orderNumberField.innerText = orderNumber;
-                        answerField.innerText = `Вы загадали число ${answerNumber }?`;
+                        text();
                     }
                 }
             })   
-            //text ();     
+            text();     
         }
         else {
             gameRun = false;    
@@ -145,7 +159,7 @@ document.getElementById('btnRetry').addEventListener('click', function () {
     
         document.getElementById('btnEqual').addEventListener('click', function () {
             if (gameRun){
-                text ();
+                text1 ();
                 gameRun = false;  
                   
             }
@@ -155,7 +169,81 @@ document.getElementById('btnRetry').addEventListener('click', function () {
 
 document.getElementById('btnEqual').addEventListener('click', function () {
     if (gameRun){
-        text ();
+        text1 ();
         gameRun = false;
     }
 })
+
+let numArr = [];
+numArr [1] = new Array("", "один", "два", "три",  "четыре", "пять", "шесть", "семь", "восемь", "девять", "десять", "одиннадцать", "двенадцать", 
+"тринадцать", "четырнадцать", "пятнадцать", "шеснадцать", "семнадцать", "восемнадцать", "девятнадцать");
+numArr [2] = new Array("", "", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят", "восемьдесят", "девяносто");
+numArr [3] = new Array("", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот");
+
+function numWord(number) {
+    let str;
+    if (number === 0) {
+       return 0
+    }
+    else if (number >= 0 && number < 100) {
+        str = numWord1_99(number)
+    }
+    else if (number <= 0 && number > -100) {
+        str = numWord_1_99(number)
+    }
+    else if (number == 100) {
+        str = numArr[3][1]
+    }
+    else if (number == -100) {
+        str = myWord + numArr[3][1]
+    }
+    else if (number >= 101 && number <= 999) {
+        let number0_99 = number % 100;
+        str = numArr[3][Math.floor(number/100)] + " " + numWord1_99(number0_99)
+    }
+    else if (number <= -101 && number >= -999) {
+        let number_0_99 = number % 100;
+        str = myWord + " " + numArr[3][Math.floor(-number/100)] + " " + numWord_1_99(number_0_99)
+    }
+    if (str.length > 20) {
+        return number
+    } 
+    return str    
+}
+
+let myWord = "минус";
+function numWord1_20(number) {
+    return numArr[1][number]
+}
+function numWord_1_20(number) {   
+    return myWord + numArr[1][number]
+}
+function numWord20_99(number) {
+    return numArr[2][Math.floor(number/10)] + " " + numArr[1] [number % 10]
+}
+function numWord_20_99(number) {
+    return numArr[2][Math.floor(number/10)] + " " + numArr[1] [number % 10]
+}
+function numWord1_99(number) {
+    if (number === 0) {
+        return ""
+    }
+    else if (number > 0 && number < 20) {
+        return numWord1_20(number)
+    }
+    else if (number >= 20 && number <= 99) {
+        return numWord20_99(number)
+    }
+}
+function numWord_1_99(number) {
+    if (number === -0) {
+        return ""
+    }
+    else if (number < 0 && number > -20) {
+        return numWord_1_20(-number)
+    }
+    else if (number <= -20 && number >= -99) {        
+        return numWord_20_99(-number)
+    }
+    
+}
